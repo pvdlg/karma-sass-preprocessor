@@ -1,5 +1,5 @@
 {
-  "name": "karma-sass-preprocessor",
+  "name": "@metahub/karma-sass-preprocessor",
   "description": "Karma preprocessor to compile sass and scss files with node-sass",
   "version": "1.0.0",
   "author": "Pierre Vanduynslager",
