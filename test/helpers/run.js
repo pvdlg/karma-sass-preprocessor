@@ -43,18 +43,18 @@ const KARMA_CONFIG = {
  * @method createTest
  * @param {string} description description of the Jasmine test to create.
  * @param {string} fixture path of the scss/sass file that will be compiled externaly and by the preprocessor to be compared.
- * @param {Object} [sassOpts={}] node-sass options to pass to the preprocessor configuration.
+ * @param {Object} [options={}] node-sass options to pass to the preprocessor configuration.
  * @return {string} the path of the JS test file to be used by Karma.
  */
-async function createTest(description, fixture, sassOpts = {}) {
-  if (sassOpts.sourceMap) {
-    sassOpts.sourceMap = true;
-    sassOpts.sourceMapEmbed = true;
+async function createTest(description, fixture, options = {}) {
+  if (options.sourceMap) {
+    options.sourceMap = true;
+    options.sourceMapEmbed = true;
   }
   const script = handlebars.compile(await readFile(path.resolve('test/helpers/test-template.hbs'), 'utf-8'))({
     description,
     fixture: fixture.replace(/\.(scss|sass)$/, '.css'),
-    expected: escape((await pify(sass.render)(Object.assign(sassOpts, {file: path.resolve(fixture)}))).css),
+    expected: escape((await pify(sass.render)(Object.assign(options, {file: path.resolve(fixture)}))).css),
   });
   const filePath = tmp(`${path.basename(fixture, path.extname(fixture))}.test.js`);
 
@@ -82,16 +82,16 @@ async function createTest(description, fixture, sassOpts = {}) {
  * @method run
  * @param {string} description description of the Jasmine test to create.
  * @param {string} fixture path of the scss/sass file that will be compiled externaly and by the preprocessor to be compared.
- * @param {Object} [sassOpts] node-sass options to pass to the preprocessor configuration.
+ * @param {Object} [options] node-sass options to pass to the preprocessor configuration.
  * @param {Boolean} [noTest=false] `true` to not include a Jasmine test (i.e. to test expected error).
  * @return {Promise<KarmaOutput>} A Promise that resolve to the Karma execution results.
  */
-export default async function run(description, fixture, sassOpts, noTest = false) {
+export default async function run(description, fixture, options, noTest = false) {
   const server = new Server(
     Object.assign(KARMA_CONFIG, {
-      files: [fixture].concat(noTest ? [] : await createTest(description, fixture, sassOpts)),
-      sassPreprocessor: {sassOpts},
-      customPreprocessors: {custom_sass: {base: 'sass', options: {sassOpts}}},
+      files: [fixture].concat(noTest ? [] : await createTest(description, fixture, options)),
+      sassPreprocessor: {options},
+      customPreprocessors: {custom_sass: {base: 'sass', options}},
     }),
     () => 0
   );
