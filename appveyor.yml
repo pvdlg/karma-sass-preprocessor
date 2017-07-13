@@ -9,12 +9,11 @@ branches:
     - /^greenkeeper.*$/
 install:
   - ps: Install-Product node $env:nodejs_version
-  - IF %nodejs_version% LSS 5 npm -g install npm@3
-  - npm install
+  - yarn install
 platform:
   - x86
   - x64
 test_script:
-  - npm run test
+  - yarn run test
 build: off
 deploy: off
