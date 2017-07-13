@@ -1,5 +1,7 @@
 # **karma-sass-preprocessor**
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/vanduynslagerp/karma-sass-preprocessor.svg)](https://greenkeeper.io/)
+
 Karma preprocessor to compile sass and scss files with node-sass.
 
 [![Travis](https://img.shields.io/travis/vanduynslagerp/karma-sass-preprocessor.svg)](https://travis-ci.org/vanduynslagerp/karma-sass-preprocessor)
