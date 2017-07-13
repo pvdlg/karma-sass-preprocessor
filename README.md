@@ -20,7 +20,7 @@ npm install @metahub/karma-sass-preprocessor --save-dev
 
 ## Configuration
 
-All the [node-sass](https://www.npmjs.com/package/node-sass) option can be passed to sassPreprocessor.
+All the [node-sass](https://www.npmjs.com/package/node-sass) option can be passed to `sassPreprocessor`.
 
 ### Standard
 
