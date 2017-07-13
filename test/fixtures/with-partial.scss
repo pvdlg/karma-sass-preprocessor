@@ -1,0 +1,9 @@
+@import 'partial';
+
+$color: purple;
+$margin: 1.23456789px;
+
+.test {
+  margin: $margin;
+  @include text-color($color);
+}

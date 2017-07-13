@@ -1,0 +1,11 @@
+$color: purple;
+$margin: 1.23456789px;
+
+@mixin text-purple() {
+  color: $color;
+}
+
+.test {
+  margin: $margin;
+  @include text-red();
+}
