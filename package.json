@@ -7,12 +7,6 @@
     "url": "https://github.com/vanduynslagerp/karma-sass-preprocessor/issues"
   },
   "dependencies": {
-    "chalk": "^2.0.1",
-    "eslint-config-prettier": "^2.3.0",
-    "eslint-plugin-ava": "^4.2.1",
-    "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-prettier": "^2.1.2",
     "lodash": "^4.17.4",
     "node-sass": "^4.5.3"
   },
