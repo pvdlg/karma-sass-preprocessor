@@ -16,7 +16,7 @@ import tmp from './tmp';
  */
 const KARMA_CONFIG = {
   basePath: '',
-  frameworks: ['jasmine-jquery', 'jasmine'],
+  frameworks: ['jasmine-jquery'],
   preprocessors: {
     'test/fixtures/**/!(*custom).+(scss|sass)': ['sass'],
     'test/fixtures/**/*custom.+(scss|sass)': ['custom_sass'],
@@ -27,14 +27,7 @@ const KARMA_CONFIG = {
   logLevel: constants.LOG_DISABLE,
   browsers: ['PhantomJS'],
   singleRun: true,
-  plugins: [
-    'karma-jasmine',
-    'karma-phantomjs-launcher',
-    'karma-jasmine-jquery',
-    'karma-jasmine',
-    'karma-babel-preprocessor',
-    karmaSassPreprocessor,
-  ],
+  plugins: ['@metahub/karma-jasmine-jquery', 'karma-*', karmaSassPreprocessor],
 };
 
 /**
@@ -84,7 +77,7 @@ async function createTest(description, fixture, options = {}) {
  * @param {string} fixture path of the scss/sass file that will be compiled externaly and by the preprocessor to be compared.
  * @param {Object} [options] node-sass options to pass to the preprocessor configuration.
  * @param {Boolean} [noTest=false] `true` to not include a Jasmine test (i.e. to test expected error).
- * @return {Promise<KarmaOutput>} A Promise that resolve to the Karma execution results.
+ * @return {Promise<KarmaOutput>} A `Promise` that resolve to the Karma execution results.
  */
 export default async function run(description, fixture, options, noTest = false) {
   const server = new Server(
