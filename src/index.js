@@ -16,7 +16,7 @@ function createSassPreprocessor(args, config = {}, logger) {
   const transformPath =
     args.transformPath ||
     config.transformPath ||
-    (filepath => `${path.join(path.dirname(filepath), path.basename(filepath, path.extname(filepath)))}.css`);
+    (filepath => `${path.dirname(filepath)}/${path.basename(filepath, path.extname(filepath))}.css`);
 
   return (content, file, done) => {
     log.debug('Processing "%s".', file.originalPath);
