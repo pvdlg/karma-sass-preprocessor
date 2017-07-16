@@ -1,7 +1,7 @@
 {
   "name": "@metahub/karma-sass-preprocessor",
   "description": "Karma preprocessor to compile sass and scss files with node-sass",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Pierre Vanduynslager",
   "bugs": {
     "url": "https://github.com/vanduynslagerp/karma-sass-preprocessor/issues"
@@ -47,9 +47,17 @@
   "engines": {
     "node": ">=4"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "homepage": "https://github.com/vanduynslagerp/karma-sass-preprocessor#readme",
-  "keywords": ["karma-plugin", "karma-preprocessor", "node-sass", "sass", "scss"],
+  "keywords": [
+    "karma-plugin",
+    "karma-preprocessor",
+    "node-sass",
+    "sass",
+    "scss"
+  ],
   "license": "MIT",
   "main": "lib/index.js",
   "repository": {

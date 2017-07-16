@@ -23,6 +23,8 @@ npm install @metahub/karma-sass-preprocessor --save-dev
 
 All the [node-sass](https://www.npmjs.com/package/node-sass) option can be passed to `sassPreprocessor`.
 
+In addition the preprocessor accept a function in the optional `transformPath` configuration, to rewrite file path deployed on the Karma webserver. If not specified, the processed file will be accessible with the same path as the originals with the extension `.css` instead of `.sass` or `.scss`. For example `test/fixtures.myStyle.scss` will be deployed as `test/fixtures.myStyle.css`.
+
 ### Standard
 
 ```js
@@ -43,6 +45,8 @@ module.exports = function(config) {
         includePaths: ['node_modules', 'path/to/imported/lib'],
         outputStyle: 'expanded',
       },
+      // File test/fixtures/myStyle.sccs will be accessible in the unit test on path styles/myStyle.css
+      transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace('test/fixtures/', 'styles/')
     },
   });
 };
@@ -72,6 +76,8 @@ module.exports = function(config) {
       },
       sassCompressed: {
         base: 'sass',
+        // File test/fixtures/myStyle.sccs will be accessible in the unit test on path compressed/myStyle.css
+        transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace('test/fixtures/', 'compressed/')
         options: {
           options: {
             sourceMap: false,
