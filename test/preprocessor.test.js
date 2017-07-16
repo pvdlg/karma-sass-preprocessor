@@ -1,3 +1,4 @@
+import path from 'path';
 import test from 'ava';
 import run from './helpers/run';
 
@@ -130,7 +131,7 @@ test('Compile scss file with non css extension and custom transformPath', async 
     disconnected,
     exitCode,
   } = await run('Scss file with non css extension and custom transformPath', 'test/fixtures/basic.txt', {
-    transformPath: filePath => filePath.replace(/\.(txt)$/, '.css').replace('fixtures/', ''),
+    transformPath: filePath => filePath.replace(/\.(txt)$/, '.css').replace(path.normalize('fixtures/'), ''),
   });
 
   t.ifError(error, 'Karma returned an error');
@@ -150,7 +151,7 @@ test('Compile scss file with non css extension, custom transformPath and custom 
   } = await run(
     'Scss file with non css extension, custom transformPath and custom preprocessor',
     'test/fixtures/basic.custom.txt',
-    {transformPath: filePath => filePath.replace(/\.(txt)$/, '.css').replace('fixtures/', '')}
+    {transformPath: filePath => filePath.replace(/\.(txt)$/, '.css').replace(path.normalize('fixtures/'), '')}
   );
 
   t.ifError(error, 'Karma returned an error');

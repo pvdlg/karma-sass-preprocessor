@@ -23,7 +23,7 @@ npm install @metahub/karma-sass-preprocessor --save-dev
 
 All the [node-sass](https://www.npmjs.com/package/node-sass) option can be passed to `sassPreprocessor`.
 
-In addition the preprocessor accept a function in the optional `transformPath` configuration, to rewrite file path deployed on the Karma webserver. If not specified, the processed file will be accessible with the same path as the originals with the extension `.css` instead of `.sass` or `.scss`. For example `test/fixtures.myStyle.scss` will be deployed as `test/fixtures.myStyle.css`.
+In addition the preprocessor accept a function in the optional `transformPath` configuration, to rewrite file path deployed on the Karma webserver. If not specified, the processed file will be accessible with the same path as the originals with the extension `.css` instead of `.sass` or `.scss`. For example `test/fixtures/myStyle.scss` will be deployed as `base/test/fixtures.myStyle.css`.
 
 ### Standard
 
@@ -45,8 +45,8 @@ module.exports = function(config) {
         includePaths: ['node_modules', 'path/to/imported/lib'],
         outputStyle: 'expanded',
       },
-      // File test/fixtures/myStyle.sccs will be accessible in the unit test on path styles/myStyle.css
-      transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace('test/fixtures/', 'styles/')
+      // File test/fixtures/myStyle.sccs will be accessible in the unit test on path base/styles/myStyle.css
+      transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace(path.normalize('test/fixtures'), 'styles')
     },
   });
 };
@@ -61,12 +61,12 @@ module.exports = function(config) {
     files: ['src/**/*.+(scss|sass)', 'test/fixtures/**/*.+(scss|sass)'],
 
     preprocessors: {
-      'src/**/*.+(scss|sass)': ['sassExpanded'],
-      'test/fixtures/**/*.+(scss|sass)': ['sassCompressed'],
+      'src/**/*.+(scss|sass)': ['sass_1'],
+      'test/fixtures/**/*.+(scss|sass)': ['sass_2'],
     },
 
     customPreprocessors: {
-      sassExpanded: {
+      sass_1: {
         base: 'sass',
         options: {
           sourceMap: true,
@@ -74,16 +74,14 @@ module.exports = function(config) {
           outputStyle: 'expanded',
         },
       },
-      sassCompressed: {
+      sass_2: {
         base: 'sass',
-        // File test/fixtures/myStyle.sccs will be accessible in the unit test on path compressed/myStyle.css
-        transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace('test/fixtures/', 'compressed/')
+        // File test/fixtures/myStyle.sccs will be accessible in the unit test on path base/compressed/myStyle.css
+        transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace(path.normalize('test/fixtures'), 'compressed')
         options: {
-          options: {
-            sourceMap: false,
-            precision: 8,
-            outputStyle: 'compressed',
-          },
+          sourceMap: false,
+          precision: 8,
+          outputStyle: 'compressed',
         },
       },
     },
