@@ -47,7 +47,7 @@ async function createTest(description, fixture, config = {}) {
   }
   const transformPath =
     config.transformPath ||
-    (filepath => `${path.join(path.dirname(filepath), path.basename(filepath, path.extname(filepath)))}.css`);
+    (filepath => `${path.dirname(filepath)}/${path.basename(filepath, path.extname(filepath))}.css`);
 
   console.log(`input ${fixture}`);
   console.log(`converted ${transformPath(fixture)}`);
