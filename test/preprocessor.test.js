@@ -1,4 +1,3 @@
-import path from 'path';
 import test from 'ava';
 import run from './helpers/run';
 
