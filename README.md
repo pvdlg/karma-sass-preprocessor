@@ -1,6 +1,6 @@
 # **karma-sass-preprocessor**
 
-Karma preprocessor to compile sass and scss files with node-sass.
+Karma preprocessor to compile sass and scss files with [node-sass](https://github.com/sass/node-sass).
 
 [![Travis](https://img.shields.io/travis/vanduynslagerp/karma-sass-preprocessor.svg)](https://travis-ci.org/vanduynslagerp/karma-sass-preprocessor)
 [![AppVeyor](https://img.shields.io/appveyor/ci/vanduynslagerp/karma-sass-preprocessor.svg)](https://ci.appveyor.com/project/vanduynslagerp/karma-sass-preprocessor)
@@ -16,12 +16,14 @@ Karma preprocessor to compile sass and scss files with node-sass.
 ## Installation
 
 ```bash
-npm install @metahub/karma-sass-preprocessor --save-dev
+npm install node-sass @metahub/karma-sass-preprocessor --save-dev
 ```
 
 ## Configuration
 
-All the [node-sass](https://www.npmjs.com/package/node-sass) option can be passed to `sassPreprocessor`.
+All the [node-sass](https://github.com/sass/node-sass) options can be passed to `sassPreprocessor.options`.
+
+In addition the preprocessor accept a `transformPath` function, to rewrite the path on which the files are deployed on the Karma webserver. If not specified, the processed files will be accessible with the same paths as the originals with the extension `.css` instead of `.sass` or `.scss`. For example `test/fixtures/myStyle.scss` will be deployed as `base/test/fixtures.myStyle.css`.
 
 ### Standard
 
@@ -30,6 +32,7 @@ module.exports = function(config) {
   config.set({
     files: ['src/**/*.+(scss|sass)', 'test/fixtures/**/*.+(scss|sass)'],
 
+    plugins: ['@metahub/karma-sass-preprocessor', 'karma-*'],
     preprocessors: {
       'src/**/*.+(scss|sass)': ['sass'],
       'test/fixtures/**/*.+(scss|sass)': ['sass'],
@@ -43,10 +46,13 @@ module.exports = function(config) {
         includePaths: ['node_modules', 'path/to/imported/lib'],
         outputStyle: 'expanded',
       },
+      // File test/fixtures/myStyle.sccs will be accessible in the unit test on path base/styles/myStyle.css
+      transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace('test/fixtures', 'styles')
     },
   });
 };
 ```
+**_Note: Karma can auto-load plugins named `karma-*` (see [plugins](http://karma-runner.github.io/1.0/config/plugins.html)). Unfortunatly it doesn't work with [scoped packages](https://docs.npmjs.com/misc/scope), therefore `@metahub/karma-sass-preprocessor` has to be explicitly added to the `plugins` configuration. In order to continue to automatically load other plugins you can add `karma-*` to the `plugins` configuration._**
 
 ### Configured Preprocessors
 See [configured preprocessors](http://karma-runner.github.io/1.0/config/preprocessors.html).
@@ -56,13 +62,14 @@ module.exports = function(config) {
   config.set({
     files: ['src/**/*.+(scss|sass)', 'test/fixtures/**/*.+(scss|sass)'],
 
+    plugins: ['@metahub/karma-sass-preprocessor', 'karma-*'],
     preprocessors: {
-      'src/**/*.+(scss|sass)': ['sassExpanded'],
-      'test/fixtures/**/*.+(scss|sass)': ['sassCompressed'],
+      'src/**/*.+(scss|sass)': ['sass_1'],
+      'test/fixtures/**/*.+(scss|sass)': ['sass_2'],
     },
 
     customPreprocessors: {
-      sassExpanded: {
+      sass_1: {
         base: 'sass',
         options: {
           sourceMap: true,
@@ -70,14 +77,14 @@ module.exports = function(config) {
           outputStyle: 'expanded',
         },
       },
-      sassCompressed: {
+      sass_2: {
         base: 'sass',
+        // File test/fixtures/myStyle.sccs will be accessible in the unit test on path base/2/myStyle.css
+        transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace('test/fixtures', '2')
         options: {
-          options: {
-            sourceMap: false,
-            precision: 8,
-            outputStyle: 'compressed',
-          },
+          sourceMap: false,
+          precision: 8,
+          outputStyle: 'compressed',
         },
       },
     },
