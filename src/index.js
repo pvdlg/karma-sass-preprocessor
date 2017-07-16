@@ -21,6 +21,7 @@ function createSassPreprocessor(args, config = {}, logger) {
   return (content, file, done) => {
     log.debug('Processing "%s".', file.originalPath);
     file.path = transformPath(file.originalPath);
+
     // Clone the options because we need to mutate them
     const opts = clone(options);
 

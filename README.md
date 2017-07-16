@@ -46,7 +46,7 @@ module.exports = function(config) {
         outputStyle: 'expanded',
       },
       // File test/fixtures/myStyle.sccs will be accessible in the unit test on path base/styles/myStyle.css
-      transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace(path.normalize('test/fixtures'), 'styles')
+      transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace('test/fixtures', 'styles')
     },
   });
 };
@@ -76,8 +76,8 @@ module.exports = function(config) {
       },
       sass_2: {
         base: 'sass',
-        // File test/fixtures/myStyle.sccs will be accessible in the unit test on path base/compressed/myStyle.css
-        transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace(path.normalize('test/fixtures'), 'compressed')
+        // File test/fixtures/myStyle.sccs will be accessible in the unit test on path base/2/myStyle.css
+        transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace('test/fixtures', '2')
         options: {
           sourceMap: false,
           precision: 8,

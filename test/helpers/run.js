@@ -48,11 +48,6 @@ async function createTest(description, fixture, config = {}) {
   const transformPath =
     config.transformPath ||
     (filepath => `${path.dirname(filepath)}/${path.basename(filepath, path.extname(filepath))}.css`);
-
-  console.log(`input ${fixture}`);
-  console.log(`converted ${transformPath(fixture)}`);
-  console.log(`converted + normalize${transformPath(path.normalize(fixture))}`);
-  console.log(`converted + resolve${transformPath(path.resolve(fixture))}`);
   const script = handlebars.compile(await readFile(path.resolve('test/helpers/test-template.hbs'), 'utf-8'))({
     description,
     fixture: transformPath(fixture),
