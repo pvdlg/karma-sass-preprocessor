@@ -30,12 +30,11 @@ In addition the preprocessor accept a `transformPath` function, to rewrite the p
 ```js
 module.exports = function(config) {
   config.set({
-    files: ['src/**/*.+(scss|sass)', 'test/fixtures/**/*.+(scss|sass)'],
+    files: ['src/sass/main.scss'],
 
     plugins: ['@metahub/karma-sass-preprocessor', 'karma-*'],
     preprocessors: {
-      'src/**/*.+(scss|sass)': ['sass'],
-      'test/fixtures/**/*.+(scss|sass)': ['sass'],
+      '**/*.scss': ['sass']
     },
 
     sassPreprocessor: {
@@ -46,13 +45,15 @@ module.exports = function(config) {
         includePaths: ['node_modules', 'path/to/imported/lib'],
         outputStyle: 'expanded',
       },
-      // File test/fixtures/myStyle.sccs will be accessible in the unit test on path base/styles/myStyle.css
-      transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace('test/fixtures', 'styles')
+      // File src/sass/main.sccs will be accessible in the unit test on path base/styles/main.css
+      transformPath: filePath => filePath.replace(/\.sccs$/, '.css').replace('src/sass', 'styles')
     },
   });
 };
 ```
 **_Note: Karma can auto-load plugins named `karma-*` (see [plugins](http://karma-runner.github.io/1.0/config/plugins.html)). Unfortunatly it doesn't work with [scoped packages](https://docs.npmjs.com/misc/scope), therefore `@metahub/karma-sass-preprocessor` has to be explicitly added to the `plugins` configuration. In order to continue to automatically load other plugins you can add `karma-*` to the `plugins` configuration._**
+
+**_Note: `@metahub/karma-sass-preprocessor` embed its own watcher to monitor sass dependency, therefore only the sass entry point has to be configured in Karma. If Karma is configured with `autoWatch: true`, the modification of an imported sass partial will trigger a new build and test run._**
 
 ### Configured Preprocessors
 See [configured preprocessors](http://karma-runner.github.io/1.0/config/preprocessors.html).
@@ -60,12 +61,12 @@ See [configured preprocessors](http://karma-runner.github.io/1.0/config/preproce
 ```js
 module.exports = function(config) {
   config.set({
-    files: ['src/**/*.+(scss|sass)', 'test/fixtures/**/*.+(scss|sass)'],
+    files: ['src/sass/main.scss', 'test/fixtures/myFixture.scss'],
 
     plugins: ['@metahub/karma-sass-preprocessor', 'karma-*'],
     preprocessors: {
-      'src/**/*.+(scss|sass)': ['sass_1'],
-      'test/fixtures/**/*.+(scss|sass)': ['sass_2'],
+      'src/**/*.scss': ['sass_1'],
+      'test/fixtures/**/*.scss': ['sass_2'],
     },
 
     customPreprocessors: {
@@ -79,8 +80,8 @@ module.exports = function(config) {
       },
       sass_2: {
         base: 'sass',
-        // File test/fixtures/myStyle.sccs will be accessible in the unit test on path base/2/myStyle.css
-        transformPath: filePath => filePath.replace(/\.(sccs|sass)$/, '.css').replace('test/fixtures', '2')
+        // File test/fixtures/myFixture.sccs will be accessible in the unit test on path base/2/myFixture.css
+        transformPath: filePath => filePath.replace(/\.sccs$/, '.css').replace('test/fixtures', '2')
         options: {
           sourceMap: false,
           precision: 8,

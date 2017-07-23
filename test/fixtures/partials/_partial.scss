@@ -1,3 +1,6 @@
-@mixin text-color($color) {
-  color: $color;
+@import 'sub-partial';
+
+@mixin text-bg-color($color) {
+  color: #fff;
+  @include bg-color($color);
 }
