@@ -1,6 +1,5 @@
 import path from 'path';
-import {utimes} from 'fs';
-import {copy, readFile, outputFile} from 'fs-extra';
+import {utimes, copy, readFile, outputFile} from 'fs-extra';
 import test from 'ava';
 import pTimeout from 'p-timeout';
 import {run, watch, waitForRunComplete} from './helpers/karma';

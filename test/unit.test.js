@@ -1,6 +1,5 @@
 import path from 'path';
-import {utimes} from 'fs';
-import {readFile, copy, outputFile, remove} from 'fs-extra';
+import {readFile, utimes, copy, outputFile, remove} from 'fs-extra';
 import test from 'ava';
 import {spy, match} from 'sinon';
 import {tmp, sleep, waitFor, sass} from './helpers/utils';
@@ -328,7 +327,8 @@ test('Call refreshFiles when dependency is modified', async t => {
 
   // eslint-disable-next-line no-magic-numbers
   await sleep(150);
-  utimes(path.resolve(partial), Date.now(), Date.now());
+  console.log('CALL UTIMES');
+  utimes(path.resolve(partial), Date.now() / 1000, Date.now() / 1000);
   t.is(path.resolve(partial), await change);
   t.true(info.firstCall.calledWith(match('Changed file'), path.resolve(partial)));
   t.true(info.calledOnce);
