@@ -1,5 +1,6 @@
 import path from 'path';
-import {readFile, utimes, copy, outputFile, remove} from 'fs-extra';
+import {utimes} from 'fs';
+import {readFile, copy, outputFile, remove} from 'fs-extra';
 import test from 'ava';
 import {spy, match} from 'sinon';
 import {tmp, sleep, waitFor, sass} from './helpers/utils';
