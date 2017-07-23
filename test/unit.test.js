@@ -12,7 +12,7 @@ test('Compile scss file', async t => {
 
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
-  t.is(file.path, path.normalize('test/fixtures/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
 
 test('Compile sass file', async t => {
@@ -22,7 +22,7 @@ test('Compile sass file', async t => {
 
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
-  t.is(file.path, path.normalize('test/fixtures/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
 
 test('Compile scss file with sourcemap (options.sourceMap)', async t => {
@@ -33,7 +33,7 @@ test('Compile scss file with sourcemap (options.sourceMap)', async t => {
 
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
-  t.is(file.path, path.normalize('test/fixtures/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
 
 test('Compile scss file with sourcemap (options.map)', async t => {
@@ -44,7 +44,7 @@ test('Compile scss file with sourcemap (options.map)', async t => {
 
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
-  t.is(file.path, path.normalize('test/fixtures/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
 
 test('Compile scss file with sourcemap (options.sourceMap) and custom preprocessor', async t => {
@@ -55,7 +55,7 @@ test('Compile scss file with sourcemap (options.sourceMap) and custom preprocess
 
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
-  t.is(file.path, path.normalize('test/fixtures/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
 
 test('Compile scss file with sourcemap (options.map) and custom preprocessor', async t => {
@@ -66,7 +66,7 @@ test('Compile scss file with sourcemap (options.map) and custom preprocessor', a
 
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
-  t.is(file.path, path.normalize('test/fixtures/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
 
 test('Compile scss file with partial import', async t => {
@@ -77,7 +77,7 @@ test('Compile scss file with partial import', async t => {
 
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
-  t.is(file.path, path.normalize('test/fixtures/with-partial.css'));
+  t.is(path.resolve(file.path), path.resolve('test/fixtures/with-partial.css'));
 });
 
 test('Compile scss file with options', async t => {
@@ -88,7 +88,7 @@ test('Compile scss file with options', async t => {
 
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
-  t.is(file.path, path.normalize('test/fixtures/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
 
 test('Compile scss file with non css extension', async t => {
@@ -98,7 +98,7 @@ test('Compile scss file with non css extension', async t => {
 
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
-  t.is(file.path, path.normalize('test/fixtures/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
 
 test('Compile scss file with no extension', async t => {
@@ -108,7 +108,7 @@ test('Compile scss file with no extension', async t => {
 
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
-  t.is(file.path, path.normalize('test/fixtures/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
 
 test('Compile scss file with custom transformPath', async t => {
@@ -120,7 +120,7 @@ test('Compile scss file with custom transformPath', async t => {
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.true(transformPath.calledOnce);
-  t.is(file.path, path.normalize('test/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/basic.css'));
 });
 
 test('Compile scss file with custom transformPath and custom preprocessor', async t => {
@@ -132,7 +132,7 @@ test('Compile scss file with custom transformPath and custom preprocessor', asyn
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.true(transformPath.calledOnce);
-  t.is(file.path, path.normalize('test/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/basic.css'));
 });
 
 test('Log error on invalid scss file', async t => {
