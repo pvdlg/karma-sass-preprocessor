@@ -51,7 +51,7 @@ test('Re-compile scss file when dependency is modified', async t => {
     t.ifError(disconnected, 'Karma disconnected');
     t.is(success, 1, 'Expected 1 test successful');
 
-    utimes(path.resolve(partial), Date.now(), Date.now());
+    utimes(partial, Date.now() / 1000, Date.now() / 1000);
     ({success, error, disconnected} = await waitForRunComplete(server));
 
     t.ifError(error, 'Karma returned an error');
@@ -95,7 +95,7 @@ test('Do not recompile scss file when dependency is not imported anymore', async
     t.ifError(disconnected, 'Karma disconnected');
     t.is(success, 1, 'Expected 1 test successful');
 
-    utimes(path.resolve(partial), Date.now(), Date.now());
+    utimes(partial, Date.now() / 1000, Date.now() / 1000);
     await t.throws(waitForRunComplete(server), pTimeout.TimeoutError);
   } finally {
     await server.emitAsync('exit');
