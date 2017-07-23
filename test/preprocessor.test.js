@@ -1,189 +1,103 @@
+import path from 'path';
+import {utimes, copy, readFile, outputFile} from 'fs-extra';
 import test from 'ava';
-import run from './helpers/run';
-
-// eslint-disable-next-line no-magic-numbers
-process.setMaxListeners(15);
+import pTimeout from 'p-timeout';
+import {run, watch, waitForRunComplete} from './helpers/karma';
+import {tmp} from './helpers/utils';
 
 test('Compile scss file', async t => {
-  const {success, failed, error, disconnected, exitCode} = await run('Basic scss', 'test/fixtures/basic.scss');
+  const {success, error, disconnected} = await run(['test/fixtures/basic.scss', 'test/fixtures/styles.test.js']);
 
   t.ifError(error, 'Karma returned an error');
   t.ifError(disconnected, 'Karma disconnected');
-  t.is(exitCode, 0, 'Expected zero exit code');
   t.is(success, 1, 'Expected 1 test successful');
-  t.is(failed, 0, 'Expected no failed test');
-});
-
-test('Compile sass file', async t => {
-  const {success, failed, error, disconnected, exitCode} = await run('Scss file', 'test/fixtures/basic.sass');
-
-  t.ifError(error, 'Karma returned an error');
-  t.ifError(disconnected, 'Karma disconnected');
-  t.is(exitCode, 0, 'Expected zero exit code');
-  t.is(success, 1, 'Expected 1 test successful');
-  t.is(failed, 0, 'Expected no failed test');
 });
 
 test('Compile scss file with custom preprocessor', async t => {
-  const {success, failed, error, disconnected, exitCode} = await run(
-    'Scss file with custom preprocessor',
-    'test/fixtures/basic.custom.scss'
-  );
+  const {success, error, disconnected} = await run(['test/fixtures/basic.custom.scss', 'test/fixtures/styles.test.js']);
 
   t.ifError(error, 'Karma returned an error');
   t.ifError(disconnected, 'Karma disconnected');
-  t.is(exitCode, 0, 'Expected zero exit code');
   t.is(success, 1, 'Expected 1 test successful');
-  t.is(failed, 0, 'Expected no failed test');
-});
-
-test('Compile scss file with sourcemap (options.sourceMap)', async t => {
-  const {
-    success,
-    failed,
-    error,
-    disconnected,
-    exitCode,
-  } = await run('Scss file with sourcemap (options.sourceMap)', 'test/fixtures/basic.scss', {
-    options: {sourceMap: true},
-  });
-
-  t.ifError(error, 'Karma returned an error');
-  t.ifError(disconnected, 'Karma disconnected');
-  t.is(exitCode, 0, 'Expected zero exit code');
-  t.is(success, 1, 'Expected 1 test successful');
-  t.is(failed, 0, 'Expected no failed test');
-});
-
-test('Compile scss file with sourcemap (options.map)', async t => {
-  const {
-    success,
-    failed,
-    error,
-    disconnected,
-    exitCode,
-  } = await run('Scss file with sourcemap (options.sourceMap)', 'test/fixtures/basic.scss', {
-    options: {map: true},
-  });
-
-  t.ifError(error, 'Karma returned an error');
-  t.ifError(disconnected, 'Karma disconnected');
-  t.is(exitCode, 0, 'Expected zero exit code');
-  t.is(success, 1, 'Expected 1 test successful');
-  t.is(failed, 0, 'Expected no failed test');
-});
-
-test('Compile scss file with partial import', async t => {
-  const {
-    success,
-    failed,
-    error,
-    disconnected,
-    exitCode,
-  } = await run('Scss file with partial import', 'test/fixtures/with-partial.scss', {
-    options: {includePaths: ['test/fixtures/partials']},
-  });
-
-  t.ifError(error, 'Karma returned an error');
-  t.ifError(disconnected, 'Karma disconnected');
-  t.is(exitCode, 0, 'Expected zero exit code');
-  t.is(success, 1, 'Expected 1 test successful');
-  t.is(failed, 0, 'Expected no failed test');
-});
-
-test('Compile scss file with options', async t => {
-  const {
-    success,
-    failed,
-    error,
-    disconnected,
-    exitCode,
-  } = await run('Scss file with options', 'test/fixtures/basic.scss', {
-    options: {precision: 8, sourceComments: true, outputStyle: 'compressed'},
-  });
-
-  t.ifError(error, 'Karma returned an error');
-  t.ifError(disconnected, 'Karma disconnected');
-  t.is(exitCode, 0, 'Expected zero exit code');
-  t.is(success, 1, 'Expected 1 test successful');
-  t.is(failed, 0, 'Expected no failed test');
-});
-
-test('Compile scss file with non css extension', async t => {
-  const {success, failed, error, disconnected, exitCode} = await run(
-    'Scss file with non css extension',
-    'test/fixtures/basic.txt'
-  );
-
-  t.ifError(error, 'Karma returned an error');
-  t.ifError(disconnected, 'Karma disconnected');
-  t.is(exitCode, 0, 'Expected zero exit code');
-  t.is(success, 1, 'Expected 1 test successful');
-  t.is(failed, 0, 'Expected no failed test');
-});
-
-test('Compile scss file with non css extension and custom transformPath', async t => {
-  const {
-    success,
-    failed,
-    error,
-    disconnected,
-    exitCode,
-  } = await run('Scss file with non css extension and custom transformPath', 'test/fixtures/basic.txt', {
-    transformPath: filePath => filePath.replace(/\.(txt)$/, '.css').replace('fixtures/', ''),
-  });
-
-  t.ifError(error, 'Karma returned an error');
-  t.ifError(disconnected, 'Karma disconnected');
-  t.is(exitCode, 0, 'Expected zero exit code');
-  t.is(success, 1, 'Expected 1 test successful');
-  t.is(failed, 0, 'Expected no failed test');
-});
-
-test('Compile scss file with non css extension, custom transformPath and custom preprocessor', async t => {
-  const {
-    success,
-    failed,
-    error,
-    disconnected,
-    exitCode,
-  } = await run(
-    'Scss file with non css extension, custom transformPath and custom preprocessor',
-    'test/fixtures/basic.custom.txt',
-    {transformPath: filePath => filePath.replace(/\.(txt)$/, '.css').replace('fixtures/', '')}
-  );
-
-  t.ifError(error, 'Karma returned an error');
-  t.ifError(disconnected, 'Karma disconnected');
-  t.is(exitCode, 0, 'Expected zero exit code');
-  t.is(success, 1, 'Expected 1 test successful');
-  t.is(failed, 0, 'Expected no failed test');
-});
-
-test('Compile scss file with no extension', async t => {
-  const {success, failed, error, disconnected, exitCode} = await run(
-    'Scss file with no extension',
-    'test/fixtures/basic'
-  );
-
-  t.ifError(error, 'Karma returned an error');
-  t.ifError(disconnected, 'Karma disconnected');
-  t.is(exitCode, 0, 'Expected zero exit code');
-  t.is(success, 1, 'Expected 1 test successful');
-  t.is(failed, 0, 'Expected no failed test');
 });
 
 test('Log error on invalid scss file', async t => {
-  const {success, failed, error, disconnected, exitCode} = await run(
-    'Invalid scss file',
-    'test/fixtures/error.scss',
-    {},
-    true
-  );
+  const {error, disconnected, exitCode} = await run('test/fixtures/error.scss');
 
   t.ifError(disconnected, 'Karma disconnected');
   t.true(error, 'Expected an error to be returned');
   t.is(exitCode, 1, 'Expected non zero exit code');
-  t.is(success, 0, 'Expected no test successful');
-  t.is(failed, 0, 'Expected no failed test');
+});
+
+test('Re-compile scss file when dependency is modified', async t => {
+  const dir = path.resolve(tmp());
+  const fixture = path.join(dir, 'with-partial.scss');
+  const includePath = path.join(dir, 'partials');
+  const partial = path.join(includePath, '_partial.scss');
+
+  await Promise.all([
+    copy('test/fixtures/partials/_partial.scss', partial),
+    copy('test/fixtures/with-partial.scss', fixture),
+  ]);
+
+  const server = await watch([fixture, 'test/fixtures/styles.test.js'], {
+    options: {includePaths: [includePath, 'test/fixtures/partials']},
+  });
+
+  try {
+    let {success, error, disconnected} = await waitForRunComplete(server);
+
+    t.ifError(error, 'Karma returned an error');
+    t.ifError(disconnected, 'Karma disconnected');
+    t.is(success, 1, 'Expected 1 test successful');
+
+    utimes(partial, Date.now(), Date.now());
+    ({success, error, disconnected} = await waitForRunComplete(server));
+
+    t.ifError(error, 'Karma returned an error');
+    t.ifError(disconnected, 'Karma disconnected');
+    t.is(success, 1, 'Expected 1 test successful');
+  } finally {
+    await server.emitAsync('exit');
+  }
+});
+
+test('Do not recompile scss file when dependency is not imported anymore', async t => {
+  const dir = path.resolve(tmp());
+  const fixture = path.join(dir, 'with-partial.scss');
+  const includePath = path.join(dir, 'partials');
+  const partial = path.join(includePath, '_partial.scss');
+  const partialAlt = path.join(includePath, '_partial-alt.scss');
+
+  await Promise.all([
+    copy('test/fixtures/partials/_partial.scss', partial),
+    copy('test/fixtures/partials/_partial.scss', partialAlt),
+    copy('test/fixtures/with-partial.scss', fixture),
+  ]);
+
+  const server = await watch([fixture, 'test/fixtures/styles.test.js'], {
+    options: {includePaths: [includePath, 'test/fixtures/partials']},
+  });
+
+  try {
+    let {success, error, disconnected} = await waitForRunComplete(server);
+
+    t.ifError(error, 'Karma returned an error');
+    t.ifError(disconnected, 'Karma disconnected');
+    t.is(success, 1, 'Expected 1 test successful');
+
+    await outputFile(
+      fixture,
+      (await readFile(fixture)).toString().replace(`@import 'partial';`, `@import 'partial-alt';`)
+    );
+    ({success, error, disconnected} = await waitForRunComplete(server));
+    t.ifError(error, 'Karma returned an error');
+    t.ifError(disconnected, 'Karma disconnected');
+    t.is(success, 1, 'Expected 1 test successful');
+
+    await utimes(partial, Date.now(), Date.now());
+    await t.throws(waitForRunComplete(server), pTimeout.TimeoutError);
+  } finally {
+    await server.emitAsync('exit');
+  }
 });

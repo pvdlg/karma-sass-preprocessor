@@ -2,8 +2,10 @@
 
 $color: purple;
 $margin: 1.23456789px;
+$height: 20px;
 
 .test {
+  height: $height;
   margin: $margin;
-  @include text-color($color);
+  @include text-bg-color($color);
 }
