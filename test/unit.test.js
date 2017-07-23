@@ -145,7 +145,7 @@ test('Log error on invalid scss file', async t => {
   t.true(err.message.includes('no mixin named text-red'));
   // eslint-disable-next-line no-magic-numbers
   t.is(err.line, 10);
-  t.is(err.file, path.resolve(fixture));
+  t.is(path.resolve(err.file), path.resolve(fixture));
   // eslint-disable-next-line no-magic-numbers
   t.true(error.firstCall.calledWith(match.string, match('no mixin named text-red'), fixture, match(10)));
 });
