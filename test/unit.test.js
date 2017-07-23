@@ -327,7 +327,7 @@ test('Call refreshFiles when dependency is modified', async t => {
 
   // eslint-disable-next-line no-magic-numbers
   await sleep(150);
-  utimes(partial, Date.now(), Date.now());
+  utimes(path.resolve(partial), Date.now(), Date.now());
   t.is(path.resolve(partial), await change);
   t.true(info.firstCall.calledWith(match('Changed file'), path.resolve(partial)));
   t.true(info.calledOnce);
