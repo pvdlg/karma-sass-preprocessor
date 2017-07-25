@@ -34,15 +34,14 @@ test('Re-compile scss file when dependency is modified', async t => {
   const fixture = path.join(dir, 'with-partial.scss');
   const includePath = path.join(dir, 'partials');
   const partial = path.join(includePath, '_partial.scss');
+  const subPartial = path.join(includePath, '_sub-partial.scss');
 
   await Promise.all([
     copy('test/fixtures/partials/_partial.scss', partial),
+    copy('test/fixtures/partials/_sub-partial.scss', subPartial),
     copy('test/fixtures/with-partial.scss', fixture),
   ]);
-
-  const server = await watch([fixture, 'test/fixtures/styles.test.js'], {
-    options: {includePaths: [includePath, 'test/fixtures/partials']},
-  });
+  const server = await watch([fixture, 'test/fixtures/styles.test.js'], {options: {includePaths: [includePath]}});
 
   try {
     let {success, error, disconnected} = await waitForRunComplete(server);
@@ -68,16 +67,15 @@ test('Do not recompile scss file when dependency is not imported anymore', async
   const includePath = path.join(dir, 'partials');
   const partial = path.join(includePath, '_partial.scss');
   const partialAlt = path.join(includePath, '_partial-alt.scss');
+  const subPartial = path.join(includePath, '_sub-partial.scss');
 
   await Promise.all([
     copy('test/fixtures/partials/_partial.scss', partial),
     copy('test/fixtures/partials/_partial.scss', partialAlt),
+    copy('test/fixtures/partials/_sub-partial.scss', subPartial),
     copy('test/fixtures/with-partial.scss', fixture),
   ]);
-
-  const server = await watch([fixture, 'test/fixtures/styles.test.js'], {
-    options: {includePaths: [includePath, 'test/fixtures/partials']},
-  });
+  const server = await watch([fixture, 'test/fixtures/styles.test.js'], {options: {includePaths: [includePath]}});
 
   try {
     let {success, error, disconnected} = await waitForRunComplete(server);
