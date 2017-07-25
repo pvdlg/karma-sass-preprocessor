@@ -83,7 +83,7 @@ export function watch(files, config) {
 function createServer(files, config, autoWatch) {
   return new Server(
     Object.assign(KARMA_CONFIG, {
-      files: Array.from(files),
+      files: Array.isArray(files) ? files : [files],
       sassPreprocessor: config,
       customPreprocessors: {custom_sass: Object.assign({base: 'sass'}, config)},
       singleRun: !autoWatch,
