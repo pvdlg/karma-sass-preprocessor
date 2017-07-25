@@ -48,25 +48,25 @@ test('Compile scss file with sourcemap (options.map)', async t => {
 });
 
 test('Compile scss file with sourcemap (options.sourceMap) and custom preprocessor', async t => {
-  const fixture = 'test/fixtures/basic.scss';
+  const fixture = 'test/fixtures/basic.custom.scss';
   const options = {sourceMap: true};
   const {preprocessor, debug} = mockPreprocessor({options});
   const file = {originalPath: fixture};
 
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
-  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.custom.css'));
 });
 
 test('Compile scss file with sourcemap (options.map) and custom preprocessor', async t => {
-  const fixture = 'test/fixtures/basic.scss';
+  const fixture = 'test/fixtures/basic.custom.scss';
   const options = {map: true};
   const {preprocessor, debug} = mockPreprocessor({options});
   const file = {originalPath: fixture};
 
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
-  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.custom.css'));
 });
 
 test('Compile scss file with partial import', async t => {
@@ -124,7 +124,7 @@ test('Compile scss file with custom transformPath', async t => {
 });
 
 test('Compile scss file with custom transformPath and custom preprocessor', async t => {
-  const fixture = 'test/fixtures/basic.txt';
+  const fixture = 'test/fixtures/basic.custom.txt';
   const transformPath = spy(filePath => filePath.replace(/\.(txt)$/, '.css').replace('fixtures/', ''));
   const {preprocessor, debug} = mockPreprocessor({transformPath});
   const file = {originalPath: fixture};
@@ -132,7 +132,7 @@ test('Compile scss file with custom transformPath and custom preprocessor', asyn
   t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.true(transformPath.calledOnce);
-  t.is(path.resolve(file.path), path.resolve('test/basic.css'));
+  t.is(path.resolve(file.path), path.resolve('test/basic.custom.css'));
 });
 
 test('Log error on invalid scss file', async t => {
