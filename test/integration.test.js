@@ -2,8 +2,19 @@ import path from 'path';
 import {utimes, copy, readFile, outputFile} from 'fs-extra';
 import test from 'ava';
 import pTimeout from 'p-timeout';
+import {stub} from 'sinon';
 import {run, watch, waitForRunComplete} from './helpers/karma';
 import {tmp} from './helpers/utils';
+
+let stubWrite;
+
+test.before(() => {
+  stubWrite = stub(process.stdout, 'write');
+});
+
+test.after(() => {
+  stubWrite.restore();
+});
 
 test('Compile scss file', async t => {
   const {success, error, disconnected} = await run(['test/fixtures/basic.scss', 'test/fixtures/styles.test.js']);
