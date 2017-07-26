@@ -1,6 +1,6 @@
 {
   "name": "@metahub/karma-sass-preprocessor",
-  "description": "Karma preprocessor to compile sass and scss files with node-sass",
+  "description": "Karma preprocessor to compile sass and scss files with sourcemap and watch support",
   "version": "1.2.1",
   "author": "Pierre Vanduynslager",
   "bugs": {
@@ -22,7 +22,7 @@
     "eslint": "^4.3.0",
     "eslint-config-prettier": "^2.3.0",
     "eslint-plugin-ava": "^4.2.1",
-    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jasmine": "^2.8.0",
     "eslint-plugin-json": "^1.2.0",
@@ -55,7 +55,7 @@
   },
   "files": ["lib"],
   "homepage": "https://github.com/vanduynslagerp/karma-sass-preprocessor#readme",
-  "keywords": ["karma-plugin", "karma-preprocessor", "node-sass", "sass", "scss"],
+  "keywords": ["karma-plugin", "karma-preprocessor", "node-sass", "sass", "scss", "sourcemaps", "watcher"],
   "license": "MIT",
   "main": "lib/index.js",
   "repository": {

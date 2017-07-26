@@ -2,7 +2,7 @@ import path from 'path';
 import {readFile, utimes, copy, outputFile, remove} from 'fs-extra';
 import test from 'ava';
 import {spy, match} from 'sinon';
-import {tmp, sleep, waitFor, sass} from './helpers/utils';
+import {tmp, sleep, waitFor, compile} from './helpers/utils';
 import mockPreprocessor from './helpers/mock';
 
 test('Compile scss file', async t => {
@@ -10,7 +10,7 @@ test('Compile scss file', async t => {
   const {preprocessor, debug} = mockPreprocessor();
   const file = {originalPath: fixture};
 
-  t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
+  t.is((await preprocessor(await readFile(fixture), file)).toString(), (await compile(fixture)).css);
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
@@ -20,18 +20,22 @@ test('Compile sass file', async t => {
   const {preprocessor, debug} = mockPreprocessor();
   const file = {originalPath: fixture};
 
-  t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
+  t.is((await preprocessor(await readFile(fixture), file)).toString(), (await compile(fixture)).css);
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
 
-test('Compile scss file with sourcemap (options.sourceMap)', async t => {
+test.only('Compile scss file with sourcemap (options.sourceMap)', async t => {
   const fixture = 'test/fixtures/basic.scss';
   const options = {sourceMap: true};
   const {preprocessor, debug} = mockPreprocessor({}, {sassPreprocessor: {options}});
   const file = {originalPath: fixture};
+  const {css, map} = await compile(fixture, options);
 
-  t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
+  t.is((await preprocessor(await readFile(fixture), file)).toString(), css);
+  t.deepEqual(file.sourceMap, map);
+  t.is(file.sourceMap.file, path.basename(fixture));
+  t.truthy(file.sourceMap.mappings);
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
@@ -41,8 +45,12 @@ test('Compile scss file with sourcemap (options.map)', async t => {
   const options = {map: true};
   const {preprocessor, debug} = mockPreprocessor({}, {sassPreprocessor: {options}});
   const file = {originalPath: fixture};
+  const {css, map} = await compile(fixture, options);
 
-  t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
+  t.is((await preprocessor(await readFile(fixture), file)).toString(), css);
+  t.deepEqual(file.sourceMap, map);
+  t.is(file.sourceMap.file, path.basename(fixture));
+  t.truthy(file.sourceMap.mappings);
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
@@ -52,8 +60,12 @@ test('Compile scss file with sourcemap (options.sourceMap) and custom preprocess
   const options = {sourceMap: true};
   const {preprocessor, debug} = mockPreprocessor({options});
   const file = {originalPath: fixture};
+  const {css, map} = await compile(fixture, options);
 
-  t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
+  t.is((await preprocessor(await readFile(fixture), file)).toString(), css);
+  t.deepEqual(file.sourceMap, map);
+  t.is(file.sourceMap.file, path.basename(fixture));
+  t.truthy(file.sourceMap.mappings);
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.custom.css'));
 });
@@ -63,8 +75,12 @@ test('Compile scss file with sourcemap (options.map) and custom preprocessor', a
   const options = {map: true};
   const {preprocessor, debug} = mockPreprocessor({options});
   const file = {originalPath: fixture};
+  const {css, map} = await compile(fixture, options);
 
-  t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
+  t.is((await preprocessor(await readFile(fixture), file)).toString(), css);
+  t.deepEqual(file.sourceMap, map);
+  t.is(file.sourceMap.file, path.basename(fixture));
+  t.truthy(file.sourceMap.mappings);
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.custom.css'));
 });
@@ -75,7 +91,7 @@ test('Compile scss file with partial import', async t => {
   const {preprocessor, debug} = mockPreprocessor({}, {sassPreprocessor: {options}});
   const file = {originalPath: fixture};
 
-  t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
+  t.is((await preprocessor(await readFile(fixture), file)).toString(), (await compile(fixture, options)).css);
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.is(path.resolve(file.path), path.resolve('test/fixtures/with-partial.css'));
 });
@@ -86,7 +102,7 @@ test('Compile scss file with options', async t => {
   const {preprocessor, debug} = mockPreprocessor({}, {sassPreprocessor: {options}});
   const file = {originalPath: fixture};
 
-  t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture, options));
+  t.is((await preprocessor(await readFile(fixture), file)).toString(), (await compile(fixture, options)).css);
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
@@ -96,7 +112,7 @@ test('Compile scss file with non css extension', async t => {
   const {preprocessor, debug} = mockPreprocessor();
   const file = {originalPath: fixture};
 
-  t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
+  t.is((await preprocessor(await readFile(fixture), file)).toString(), (await compile(fixture)).css);
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
@@ -106,7 +122,7 @@ test('Compile scss file with no extension', async t => {
   const {preprocessor, debug} = mockPreprocessor();
   const file = {originalPath: fixture};
 
-  t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
+  t.is((await preprocessor(await readFile(fixture), file)).toString(), (await compile(fixture)).css);
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
@@ -117,7 +133,7 @@ test('Compile scss file with custom transformPath', async t => {
   const {preprocessor, debug} = mockPreprocessor({}, {sassPreprocessor: {transformPath}});
   const file = {originalPath: fixture};
 
-  t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
+  t.is((await preprocessor(await readFile(fixture), file)).toString(), (await compile(fixture)).css);
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.true(transformPath.calledOnce);
   t.is(path.resolve(file.path), path.resolve('test/basic.css'));
@@ -129,7 +145,7 @@ test('Compile scss file with custom transformPath and custom preprocessor', asyn
   const {preprocessor, debug} = mockPreprocessor({transformPath});
   const file = {originalPath: fixture};
 
-  t.is((await preprocessor(await readFile(fixture), file)).toString(), await sass(fixture));
+  t.is((await preprocessor(await readFile(fixture), file)).toString(), (await compile(fixture)).css);
   t.true(debug.firstCall.calledWith(match('Processing'), fixture));
   t.true(transformPath.calledOnce);
   t.is(path.resolve(file.path), path.resolve('test/basic.custom.css'));

@@ -57,6 +57,7 @@ function createSassPreprocessor(args, config, logger, server) {
     }
     opts.indentedSyntax = file.originalPath.indexOf('.sass') !== -1;
     opts.file = file.originalPath;
+    opts.outFile = file.originalPath;
 
     sass.render(opts, (err, result) => {
       if (err) {
@@ -108,6 +109,10 @@ function createSassPreprocessor(args, config, logger, server) {
         if (stopWatching.length) {
           watcher.unwatch(stopWatching);
         }
+      }
+
+      if (opts.sourceMap && result.map) {
+        file.sourceMap = JSON.parse(result.map);
       }
       return done(null, result.css);
     });

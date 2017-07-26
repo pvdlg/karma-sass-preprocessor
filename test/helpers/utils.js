@@ -41,20 +41,30 @@ export function sleep(delay) {
 export function waitFor(emitter, event, timeout = 5000) {
   return pEvent(emitter, event, {timeout});
 }
-/* eslint-enable no-magic-numbers */
 
+/**
+ * @typedef {Object} Compiled
+ * @property {string} css the compiled css code.
+ * @property {Object} map the sourcemap resulting from the compilation.
+ */
+
+/* eslint-enable no-magic-numbers */
 /**
  * Compile a scss/sass file and return the result as a `string`.
  *  
- * @method sass
+ * @method compile
  * @param {string} file path of the file to compile.
  * @param {Object} [options={}] node-sass options.
- * @return {string} compiled css.
+ * @return {Compiled} compiled code and source map.
  */
-export async function sass(file, options = {}) {
+export async function compile(file, options = {}) {
   if (options.sourceMap || options.map) {
     options.sourceMap = true;
     options.sourceMapEmbed = true;
   }
-  return (await pify(render)(Object.assign(options, {file}))).css.toString();
+  options.file = file;
+  options.outFile = file;
+  const {css, map} = await pify(render)(options);
+
+  return {css: css.toString(), map: map ? JSON.parse(map) : undefined};
 }
