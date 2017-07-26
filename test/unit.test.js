@@ -25,7 +25,7 @@ test('Compile sass file', async t => {
   t.is(path.resolve(file.path), path.resolve('test/fixtures/basic.css'));
 });
 
-test.only('Compile scss file with sourcemap (options.sourceMap)', async t => {
+test('Compile scss file with sourcemap (options.sourceMap)', async t => {
   const fixture = 'test/fixtures/basic.scss';
   const options = {sourceMap: true};
   const {preprocessor, debug} = mockPreprocessor({}, {sassPreprocessor: {options}});
