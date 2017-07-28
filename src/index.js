@@ -94,7 +94,7 @@ function createSassPreprocessor(args, config, logger, server) {
 
             if (index !== -1) {
               dependencies[keys[i]].splice(index, 1);
-              if (!dependencies[keys[i]].length) {
+              if (!dependencies[keys[i]].length > 0) {
                 stopWatching.push(keys[i]);
                 log.debug('Stop watching "%s"', keys[i]);
                 delete dependencies[keys[i]];
@@ -103,10 +103,10 @@ function createSassPreprocessor(args, config, logger, server) {
           }
         }
 
-        if (startWatching.length) {
+        if (startWatching.length > 0) {
           watcher.add(startWatching);
         }
-        if (stopWatching.length) {
+        if (stopWatching.length > 0) {
           watcher.unwatch(stopWatching);
         }
       }
