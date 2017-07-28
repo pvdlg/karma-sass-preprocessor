@@ -11,7 +11,7 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "@metahub/eslint-config": "^1.5.1",
+    "@metahub/eslint-config": "^1.6.0",
     "@metahub/karma-jasmine-jquery": "^1.0.0",
     "ava": "^0.21.0",
     "babel-cli": "^6.24.1",
@@ -24,12 +24,12 @@
     "eslint-plugin-ava": "^4.2.1",
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jasmine": "^2.8.0",
+    "eslint-plugin-jasmine": "^2.8.2",
     "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-prettier": "^2.1.2",
     "eslint-plugin-promise": "^3.5.0",
     "fs-extra": "^4.0.0",
-    "jasmine-core": "^2.6.4",
+    "jasmine-core": "^2.7.0",
     "jasmine-jquery": "^2.1.1",
     "karma": "^1.7.0",
     "karma-babel-preprocessor": "^6.0.1",
@@ -53,9 +53,19 @@
   "engines": {
     "node": ">=4"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "homepage": "https://github.com/vanduynslagerp/karma-sass-preprocessor#readme",
-  "keywords": ["karma-plugin", "karma-preprocessor", "node-sass", "sass", "scss", "sourcemaps", "watcher"],
+  "keywords": [
+    "karma-plugin",
+    "karma-preprocessor",
+    "node-sass",
+    "sass",
+    "scss",
+    "sourcemaps",
+    "watcher"
+  ],
   "license": "MIT",
   "main": "lib/index.js",
   "repository": {
