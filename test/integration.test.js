@@ -52,7 +52,10 @@ test('Re-compile scss file when dependency is modified', async t => {
     copy('test/fixtures/partials/_sub-partial.scss', subPartial),
     copy('test/fixtures/with-partial.scss', fixture),
   ]);
-  const server = await watch([fixture, 'test/fixtures/styles.test.js'], {options: {includePaths: [includePath]}});
+  const server = await watch(
+    [fixture.replace('fixtures', '*').replace('with', '+(with|nomatch)'), 'test/fixtures/styles.test.js'],
+    {options: {includePaths: [includePath]}}
+  );
 
   try {
     let {success, error, disconnected} = await waitForRunComplete(server);
