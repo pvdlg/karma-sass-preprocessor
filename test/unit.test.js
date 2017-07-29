@@ -193,6 +193,25 @@ test('Add dependency to watcher', async t => {
   t.true(add.calledOnce);
 });
 
+test('Add dependency to watcher for file added with glob', async t => {
+  const fixture = 'test/fixtures/with-partial.scss';
+  const glob = 'test/*/+(with|nomatch)*+(partial|nomatch).scss';
+  const partial = path.resolve('test/fixtures/partials/_partial.scss');
+  const subPartial = path.resolve('test/fixtures/partials/_sub-partial.scss');
+  const options = {includePaths: ['test/fixtures/partials']};
+  const {preprocessor, add, debug} = mockPreprocessor(
+    {},
+    {files: [{pattern: glob, watched: true}], autoWatch: true, sassPreprocessor: {options}}
+  );
+  const file = {originalPath: fixture};
+
+  await preprocessor(await readFile(fixture), file);
+  t.true(debug.secondCall.calledWith(match('Watching'), subPartial));
+  t.true(debug.thirdCall.calledWith(match('Watching'), partial));
+  t.true(add.firstCall.calledWith(match.array.deepEquals([subPartial, partial])));
+  t.true(add.calledOnce);
+});
+
 test('Do not add dependency to watcher if parent is not watched', async t => {
   const fixture = 'test/fixtures/with-partial.scss';
   const options = {includePaths: ['test/fixtures/partials']};

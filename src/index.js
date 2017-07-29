@@ -1,6 +1,7 @@
 import path from 'path';
 import {merge} from 'lodash';
 import {FSWatcher} from 'chokidar';
+import minimatch from 'minimatch';
 import sass from 'node-sass';
 
 /**
@@ -46,7 +47,6 @@ function createSassPreprocessor(args, config, logger, server) {
   return (content, file, done) => {
     log.debug('Processing "%s".', file.originalPath);
     file.path = transformPath(file.originalPath);
-
     // Clone the options because we need to mutate them
     const opts = Object.assign({}, options);
 
@@ -66,7 +66,9 @@ function createSassPreprocessor(args, config, logger, server) {
       }
       if (
         config.autoWatch &&
-        config.files.find(configFile => configFile.pattern === file.originalPath && configFile.watched)
+        config.files.find(
+          configFile => configFile.watched && minimatch(file.originalPath, configFile.pattern, {dot: true})
+        )
       ) {
         const fullPath = path.resolve(file.originalPath);
         const includedFiles = [];

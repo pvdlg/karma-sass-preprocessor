@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "chokidar": "^1.7.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "minimatch": "^3.0.4"
   },
   "devDependencies": {
     "@metahub/eslint-config": "^1.6.0",
