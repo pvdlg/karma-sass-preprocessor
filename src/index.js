@@ -8,7 +8,7 @@ import sass from 'node-sass';
  * Sass preprocessor factory.
  * 
  * @param {Object} args Config object of custom preprocessor.
- * @param {Object} [config={}] KArma's config.
+ * @param {Object} [config={}] Karma's config.
  * @param {Object} logger Karma's logger.
  * @param {Object} server Karma's server.
  * @return {Function} the function to preprocess files.
