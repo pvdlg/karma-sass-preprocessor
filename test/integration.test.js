@@ -2,8 +2,8 @@ import path from 'path';
 import {copy} from 'fs-extra';
 import test from 'ava';
 import {stub} from 'sinon';
+import tempy from 'tempy';
 import {run, watch, waitForRunComplete} from './helpers/karma';
-import {tmp} from './helpers/utils';
 
 let stubWrite;
 
@@ -46,7 +46,7 @@ test('Log error on invalid scss file', async t => {
 });
 
 test('Re-compile scss file when dependency is modified', async t => {
-  const dir = path.resolve(tmp());
+  const dir = tempy.directory();
   const fixture = path.join(dir, 'with-partial.scss');
   const includePath = path.join(dir, 'partials');
   const partial = path.join(includePath, '_partial.scss');
