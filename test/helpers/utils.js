@@ -1,18 +1,6 @@
-import path from 'path';
-import uuid from 'uuid';
 import pify from 'pify';
 import pEvent from 'p-event';
 import {render} from 'node-sass';
-
-/**
- * Generate a unique temporary file/directory path.
- *
- * @param {String} filename file/directory name to create under 'test/fixtures/.tmp'.
- * @return {String} the path of the unique temporary file/directory.
- */
-export function tmp(filename) {
-  return path.join('test/fixtures/.tmp', uuid(), filename || '');
-}
 
 /* eslint-disable no-magic-numbers */
 /**

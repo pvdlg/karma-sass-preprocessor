@@ -2,7 +2,8 @@ import path from 'path';
 import {readFile, copy, outputFile, remove} from 'fs-extra';
 import test from 'ava';
 import {spy, match} from 'sinon';
-import {tmp, waitFor, compile} from './helpers/utils';
+import tempy from 'tempy';
+import {waitFor, compile} from './helpers/utils';
 import {mockPreprocessor} from './helpers/mock';
 
 test('Compile scss file', async t => {
@@ -226,7 +227,7 @@ test('Do not add dependency to watcher if parent is not watched', async t => {
 });
 
 test('Add dependency to watcher only once, even when its referenced multiple times', async t => {
-  const dir = path.resolve(tmp());
+  const dir = tempy.directory();
   const fixture = path.join(dir, 'with-partial.scss');
   const otherFixture = path.join(dir, 'other-with-partial.scss');
   const includePath = path.join(dir, 'partials');
@@ -285,7 +286,7 @@ test('Add dependency to watcher only once if file is overwritten', async t => {
 });
 
 test('Remove dependency from watcher if not referenced anymore', async t => {
-  const dir = path.resolve(tmp());
+  const dir = tempy.directory();
   const fixture = path.join(dir, 'with-partial.scss');
   const includePath = path.join(dir, 'partials');
   const partial = path.join(includePath, '_partial.scss');
@@ -321,7 +322,7 @@ test('Remove dependency from watcher if not referenced anymore', async t => {
 });
 
 test('Do not remove dependency from watcher when unreferenced, if another file still depends on it', async t => {
-  const dir = path.resolve(tmp());
+  const dir = tempy.directory();
   const fixture = path.join(dir, 'with-partial.scss');
   const otherFixture = path.join(dir, 'other-with-partial.scss');
   const includePath = path.join(dir, 'partials');
@@ -362,7 +363,7 @@ test('Do not remove dependency from watcher when unreferenced, if another file s
 });
 
 test('Do not remove dependency from watcher when different files have differents childs', async t => {
-  const dir = path.resolve(tmp());
+  const dir = tempy.directory();
   const fixture = path.join(dir, 'with-partial.scss');
   const otherFixture = path.join(dir, 'other-with-partial.scss');
   const includePath = path.join(dir, 'partials');
@@ -402,7 +403,7 @@ test('Do not remove dependency from watcher when different files have differents
 });
 
 test('Call refreshFiles when dependency is modified', async t => {
-  const dir = path.resolve(tmp());
+  const dir = tempy.directory();
   const fixture = path.join(dir, 'with-partial.scss');
   const includePath = path.join(dir, 'partials');
   const partial = path.join(includePath, '_partial.scss');
@@ -430,7 +431,7 @@ test('Call refreshFiles when dependency is modified', async t => {
 });
 
 test('Call refreshFiles when dependency is deleted and added', async t => {
-  const dir = path.resolve(tmp());
+  const dir = tempy.directory();
   const fixture = path.join(dir, 'with-partial.scss');
   const includePath = path.join(dir, 'partials');
   const partial = path.join(includePath, '_partial.scss');

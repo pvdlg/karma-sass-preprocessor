@@ -1,4 +1,5 @@
 import pEvent from 'p-event';
+import tempDir from 'temp-dir';
 import {Server, constants} from 'karma';
 import karmaPreprocessor from '../../lib/index';
 import {mockFactory} from './mock';
@@ -16,6 +17,10 @@ const KARMA_CONFIG = {
     'test/fixtures/**/basic': ['sass'],
     'test/fixtures/**/*custom.+(scss|sass|txt)': ['custom_sass'],
     'test/fixtures/**/*.test.js': ['babel'],
+    [`${tempDir}/**/!(*custom).+(scss|sass|txt)`]: ['sass'],
+    [`${tempDir}/**/basic`]: ['sass'],
+    [`${tempDir}/**/*custom.+(scss|sass|txt)`]: ['custom_sass'],
+    [`${tempDir}/**/*.test.js`]: ['babel'],
   },
   babelPreprocessor: {options: {babelrc: false, presets: ['es2015'], sourceMap: 'inline'}},
   colors: true,
