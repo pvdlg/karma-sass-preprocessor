@@ -2,7 +2,7 @@
   "name": "@metahub/karma-sass-preprocessor",
   "description": "Karma preprocessor to compile sass and scss files with sourcemap and watch support",
   "version": "0.0.0-development",
-  "author": "Pierre Vanduynslager",
+  "author": "Pierre Vanduynslager (https://github.com/pvdlg)",
   "babel": {
     "presets": [
       [
@@ -16,7 +16,7 @@
     ]
   },
   "bugs": {
-    "url": "https://github.com/vanduynslagerp/karma-sass-preprocessor/issues"
+    "url": "https://github.com/pvdlg/karma-sass-preprocessor/issues"
   },
   "dependencies": {
     "chokidar": "^1.7.0",
@@ -59,7 +59,7 @@
   "files": [
     "lib"
   ],
-  "homepage": "https://github.com/vanduynslagerp/karma-sass-preprocessor#readme",
+  "homepage": "https://github.com/pvdlg/karma-sass-preprocessor#readme",
   "keywords": [
     "karma-plugin",
     "karma-preprocessor",
@@ -106,7 +106,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vanduynslagerp/karma-sass-preprocessor.git"
+    "url": "git+https://github.com/pvdlg/karma-sass-preprocessor.git"
   },
   "scripts": {
     "clean": "rimraf coverage && rimraf .nyc_output",
