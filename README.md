@@ -6,7 +6,6 @@ Karma preprocessor to compile sass and scss files with [node-sass](https://githu
 [![npm](https://img.shields.io/npm/dt/@metahub/karma-sass-preprocessor.svg)](https://www.npmjs.com/package/@metahub/karma-sass-preprocessor)
 [![Greenkeeper badge](https://badges.greenkeeper.io/vanduynslagerp/karma-sass-preprocessor.svg)](https://greenkeeper.io/)
 [![license](https://img.shields.io/github/license/vanduynslagerp/karma-sass-preprocessor.svg)](https://github.com/vanduynslagerp/karma-sass-preprocessor/blob/master/LICENSE)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 [![Travis](https://img.shields.io/travis/vanduynslagerp/karma-sass-preprocessor.svg)](https://travis-ci.org/vanduynslagerp/karma-sass-preprocessor)
 [![AppVeyor](https://img.shields.io/appveyor/ci/vanduynslagerp/karma-sass-preprocessor.svg)](https://ci.appveyor.com/project/vanduynslagerp/karma-sass-preprocessor)
