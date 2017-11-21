@@ -2,11 +2,11 @@
 
 Karma preprocessor to compile sass and scss files with [node-sass](https://github.com/sass/node-sass).
 
-[![Travis](https://img.shields.io/travis/vanduynslagerp/karma-sass-preprocessor.svg)](https://travis-ci.org/vanduynslagerp/karma-sass-preprocessor)
-[![AppVeyor](https://img.shields.io/appveyor/ci/vanduynslagerp/karma-sass-preprocessor.svg)](https://ci.appveyor.com/project/vanduynslagerp/karma-sass-preprocessor)
-[![Codecov](https://img.shields.io/codecov/c/github/vanduynslagerp/karma-sass-preprocessor.svg)](https://codecov.io/gh/vanduynslagerp/karma-sass-preprocessor)
-[![Greenkeeper badge](https://badges.greenkeeper.io/vanduynslagerp/karma-sass-preprocessor.svg)](https://greenkeeper.io/)
-[![license](https://img.shields.io/github/license/vanduynslagerp/karma-sass-preprocessor.svg)](https://github.com/vanduynslagerp/karma-sass-preprocessor/blob/master/LICENSE)
+[![Travis](https://img.shields.io/travis/pvdlg/karma-sass-preprocessor.svg)](https://travis-ci.org/pvdlg/karma-sass-preprocessor)
+[![AppVeyor](https://img.shields.io/appveyor/ci/pvdlg/karma-sass-preprocessor.svg)](https://ci.appveyor.com/project/pvdlg/karma-sass-preprocessor)
+[![Codecov](https://img.shields.io/codecov/c/github/pvdlg/karma-sass-preprocessor.svg)](https://codecov.io/gh/pvdlg/karma-sass-preprocessor)
+[![Greenkeeper badge](https://badges.greenkeeper.io/pvdlg/karma-sass-preprocessor.svg)](https://greenkeeper.io/)
+[![license](https://img.shields.io/github/license/pvdlg/karma-sass-preprocessor.svg)](https://github.com/pvdlg/karma-sass-preprocessor/blob/master/LICENSE)
 
 ## Installation
 
