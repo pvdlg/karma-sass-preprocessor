@@ -11,7 +11,6 @@ Karma preprocessor to compile sass and scss files with [node-sass](https://githu
 
 [![Travis](https://img.shields.io/travis/vanduynslagerp/karma-sass-preprocessor.svg)](https://travis-ci.org/vanduynslagerp/karma-sass-preprocessor)
 [![AppVeyor](https://img.shields.io/appveyor/ci/vanduynslagerp/karma-sass-preprocessor.svg)](https://ci.appveyor.com/project/vanduynslagerp/karma-sass-preprocessor)
-[![Code Climate](https://img.shields.io/codeclimate/github/vanduynslagerp/karma-sass-preprocessor.svg)](https://codeclimate.com/github/vanduynslagerp/karma-sass-preprocessor)
 [![Codecov](https://img.shields.io/codecov/c/github/vanduynslagerp/karma-sass-preprocessor.svg)](https://codecov.io/gh/vanduynslagerp/karma-sass-preprocessor)
 
 ## Installation
