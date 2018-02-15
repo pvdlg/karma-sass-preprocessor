@@ -13,7 +13,7 @@ import {render} from 'node-sass';
  * @return {Promise} Promise tht resolve when the event is emitted.
  */
 export function waitFor(emitter, event, timeout = 30000) {
-  return pEvent(emitter, event, {timeout});
+	return pEvent(emitter, event, {timeout});
 }
 
 /**
@@ -32,13 +32,13 @@ export function waitFor(emitter, event, timeout = 30000) {
  * @return {Compiled} compiled code and source map.
  */
 export async function compile(file, options = {}) {
-  if (options.sourceMap || options.map) {
-    options.sourceMap = true;
-    options.sourceMapEmbed = true;
-  }
-  options.file = file;
-  options.outFile = file;
-  const {css, map} = await pify(render)(options);
+	if (options.sourceMap || options.map) {
+		options.sourceMap = true;
+		options.sourceMapEmbed = true;
+	}
+	options.file = file;
+	options.outFile = file;
+	const {css, map} = await pify(render)(options);
 
-  return {css: css.toString(), map: map ? JSON.parse(map) : undefined};
+	return {css: css.toString(), map: map ? JSON.parse(map) : undefined};
 }
