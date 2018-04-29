@@ -24,7 +24,7 @@
     "minimatch": "^3.0.4"
   },
   "devDependencies": {
-    "@metahub/karma-jasmine-jquery": "^1.0.0",
+    "@metahub/karma-jasmine-jquery": "^2.0.0",
     "ava": "^0.25.0",
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.6.0",
