@@ -48,7 +48,7 @@
     "sinon": "^5.0.1",
     "temp-dir": "^1.0.0",
     "tempy": "^0.2.0",
-    "xo": "^0.20.0"
+    "xo": "^0.21.0"
   },
   "engines": {
     "node": ">=6"
@@ -84,7 +84,8 @@
     "node-sass": ">=4"
   },
   "prettier": {
-    "printWidth": 120
+    "printWidth": 120,
+    "trailingComma": "es5"
   },
   "publishConfig": {
     "access": "public"
