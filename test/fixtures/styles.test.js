@@ -1,13 +1,16 @@
+/* eslint-env jasmine, jquery */
+/* global appendSetFixtures */
+
 describe('Scss file', () => {
-  beforeAll(() => {
-    jasmine.getFixtures().fixturesPath = 'base';
-  });
+	beforeAll(() => {
+		jasmine.getFixtures().fixturesPath = 'base';
+	});
 
-  it('shoud be compiled by Karma and loaded', () => {
-    const $fixture = $('<div class="test"></div>');
+	it('shoud be compiled by Karma and loaded', () => {
+		const $fixture = $('<div class="test"></div>');
 
-    appendSetFixtures($fixture);
+		appendSetFixtures($fixture);
 
-    expect($fixture).toHaveCss({height: '20px'});
-  });
+		expect($fixture).toHaveCss({height: '20px'});
+	});
 });
