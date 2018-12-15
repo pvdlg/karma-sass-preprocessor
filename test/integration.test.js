@@ -21,8 +21,8 @@ test.serial('Compile scss file', async t => {
 		'test/fixtures/styles.test.js',
 	]);
 
-	t.ifError(error, `Karma returned the error: ${errMsg}`);
-	t.ifError(disconnected, 'Karma disconnected');
+	t.falsy(error, `Karma returned the error: ${errMsg}`);
+	t.falsy(disconnected, 'Karma disconnected');
 	t.is(success, 1, 'Expected 1 test successful');
 });
 
@@ -32,15 +32,15 @@ test.serial('Compile scss file with custom preprocessor', async t => {
 		'test/fixtures/styles.test.js',
 	]);
 
-	t.ifError(error, `Karma returned the error: ${errMsg}`);
-	t.ifError(disconnected, 'Karma disconnected');
+	t.falsy(error, `Karma returned the error: ${errMsg}`);
+	t.falsy(disconnected, 'Karma disconnected');
 	t.is(success, 1, 'Expected 1 test successful');
 });
 
 test.serial('Log error on invalid scss file', async t => {
 	const {error, disconnected, exitCode} = await run('test/fixtures/error.scss');
 
-	t.ifError(disconnected, 'Karma disconnected');
+	t.falsy(disconnected, 'Karma disconnected');
 	t.true(error, 'Expected an error to be returned');
 	t.is(exitCode, 1, 'Expected non zero exit code');
 });
@@ -65,15 +65,15 @@ test.serial('Re-compile scss file when dependency is modified', async t => {
 	try {
 		let {success, error, disconnected, errMsg} = await waitForRunComplete(server);
 
-		t.ifError(error, `Karma returned the error: ${errMsg}`);
-		t.ifError(disconnected, 'Karma disconnected');
+		t.falsy(error, `Karma returned the error: ${errMsg}`);
+		t.falsy(disconnected, 'Karma disconnected');
 		t.is(success, 1, 'Expected 1 test successful');
 
 		watcher.emit('change', partial);
 		({success, error, disconnected, errMsg} = await waitForRunComplete(server));
 
-		t.ifError(error, `Karma returned the error: ${errMsg}`);
-		t.ifError(disconnected, 'Karma disconnected');
+		t.falsy(error, `Karma returned the error: ${errMsg}`);
+		t.falsy(disconnected, 'Karma disconnected');
 		t.is(success, 1, 'Expected 1 test successful');
 	} finally {
 		await server.emitAsync('exit');
