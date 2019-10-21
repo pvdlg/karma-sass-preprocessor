@@ -27,7 +27,7 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "node-sass": "^4.5.3",
     "nyc": "^13.1.0",
-    "p-event": "^2.0.0",
+    "p-event": "^4.1.0",
     "pify": "^4.0.0",
     "proxyquire": "^2.0.0",
     "semantic-release": "^15.7.1",
