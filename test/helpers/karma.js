@@ -92,7 +92,7 @@ function createServer(files, config, autoWatch, processorFactory) {
 		Object.assign(KARMA_CONFIG, {
 			files: Array.isArray(files) ? files : [files],
 			sassPreprocessor: config,
-			customPreprocessors: {custom_sass: Object.assign({base: 'sass'}, config)}, // eslint-disable-line camelcase
+			customPreprocessors: {custom_sass: {base: 'sass', ...config}}, // eslint-disable-line camelcase
 			singleRun: !autoWatch,
 			autoWatch,
 			plugins: ['@metahub/karma-jasmine-jquery', 'karma-*', processorFactory],

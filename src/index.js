@@ -48,7 +48,7 @@ function createSassPreprocessor(args, config, logger, server) {
 		log.debug('Processing "%s".', file.originalPath);
 		file.path = transformPath(file.originalPath);
 		// Clone the options because we need to mutate them
-		const opts = Object.assign({}, options);
+		const opts = {...options};
 
 		// Inline source maps
 		if (opts.sourceMap || opts.map) {
