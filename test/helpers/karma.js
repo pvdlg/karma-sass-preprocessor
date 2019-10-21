@@ -1,7 +1,7 @@
 import pEvent from 'p-event';
 import tempDir from 'temp-dir';
 import {Server, constants} from 'karma';
-import karmaPreprocessor from '../../lib';
+import karmaPreprocessor from '../..';
 import {mockFactory} from './mock';
 
 /**
@@ -22,7 +22,7 @@ const KARMA_CONFIG = {
 		[`${tempDir}/**/*custom.+(scss|sass|txt)`]: ['custom_sass'],
 		[`${tempDir}/**/*.test.js`]: ['babel'],
 	},
-	babelPreprocessor: {options: {babelrc: false, presets: ['es2015'], sourceMap: 'inline'}},
+	babelPreprocessor: {options: {babelrc: false, presets: ['@babel/preset-env'], sourceMap: 'inline'}},
 	colors: true,
 	logLevel: constants.LOG_DISABLE,
 	browsers: ['PhantomJS'],
