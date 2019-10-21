@@ -128,6 +128,7 @@ export async function waitForRunComplete(server) {
 
 			return {success, failed, error: err, disconnected, exitCode: 1, errMsg};
 		}
+
 		throw error;
 	}
 }

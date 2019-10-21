@@ -32,7 +32,7 @@ function createSassPreprocessor(args, config, logger, server) {
 				server.refreshFiles();
 			})
 			.on('add', filePath => {
-				if (unlinked.indexOf(filePath) !== -1) {
+				if (unlinked.includes(filePath)) {
 					log.info('Added file "%s".', filePath);
 					server.refreshFiles();
 				}
@@ -55,7 +55,8 @@ function createSassPreprocessor(args, config, logger, server) {
 			opts.sourceMap = true;
 			opts.sourceMapEmbed = true;
 		}
-		opts.indentedSyntax = file.originalPath.indexOf('.sass') !== -1;
+
+		opts.indentedSyntax = file.originalPath.includes('.sass');
 		opts.file = file.originalPath;
 		opts.outFile = file.originalPath;
 
@@ -64,6 +65,7 @@ function createSassPreprocessor(args, config, logger, server) {
 				log.error('%s\n  at %s:%d', err.message, file.originalPath, err.line);
 				return done(err, null);
 			}
+
 			if (
 				config.autoWatch &&
 				config.files.find(
@@ -84,14 +86,14 @@ function createSassPreprocessor(args, config, logger, server) {
 							startWatching.push(includedFile);
 							log.debug('Watching "%s"', includedFile);
 							dependencies[includedFile] = [fullPath];
-						} else if (dependencies[includedFile].indexOf(fullPath) === -1) {
+						} else if (!dependencies[includedFile].includes(fullPath)) {
 							dependencies[includedFile].push(fullPath);
 						}
 					}
 				}
 
 				for (let i = 0, keys = Object.keys(dependencies), {length} = keys; i < length; i++) {
-					if (includedFiles.indexOf(keys[i]) === -1) {
+					if (!includedFiles.includes(keys[i])) {
 						const index = dependencies[keys[i]].indexOf(fullPath);
 
 						if (index !== -1) {
@@ -108,6 +110,7 @@ function createSassPreprocessor(args, config, logger, server) {
 				if (startWatching.length > 0) {
 					watcher.add(startWatching);
 				}
+
 				if (stopWatching.length > 0) {
 					watcher.unwatch(stopWatching);
 				}
@@ -116,6 +119,7 @@ function createSassPreprocessor(args, config, logger, server) {
 			if (opts.sourceMap && result.map) {
 				file.sourceMap = JSON.parse(result.map);
 			}
+
 			return done(null, result.css);
 		});
 	};
