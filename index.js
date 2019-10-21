@@ -1,8 +1,8 @@
-import path from 'path';
-import {merge} from 'lodash';
-import {FSWatcher} from 'chokidar';
-import minimatch from 'minimatch';
-import sass from 'node-sass';
+const path = require('path');
+const {merge} = require('lodash');
+const {FSWatcher} = require('chokidar');
+const minimatch = require('minimatch');
+const sass = require('node-sass');
 
 /**
  * Sass preprocessor factory.
