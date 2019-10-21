@@ -2,7 +2,6 @@ import pify from 'pify';
 import pEvent from 'p-event';
 import {render} from 'node-sass';
 
-/* eslint-disable no-magic-numbers */
 /**
  * Return a Promise that resolve when an event is emitted and reject after a timeout expire if the event is not emitted.
  *
@@ -22,7 +21,6 @@ export function waitFor(emitter, event, timeout = 30000) {
  * @property {Object} map the sourcemap resulting from the compilation.
  */
 
-/* eslint-enable no-magic-numbers */
 /**
  * Compile a scss/sass file and return the result as a `string`.
  *
@@ -36,6 +34,7 @@ export async function compile(file, options = {}) {
 		options.sourceMap = true;
 		options.sourceMapEmbed = true;
 	}
+
 	options.file = file;
 	options.outFile = file;
 	const {css, map} = await pify(render)(options);
