@@ -237,7 +237,10 @@ test('Add dependency to watcher only once, even when its referenced multiple tim
 		{},
 		{
 			autoWatch: true,
-			files: [{pattern: fixture, watched: true}, {pattern: otherFixture, watched: true}],
+			files: [
+				{pattern: fixture, watched: true},
+				{pattern: otherFixture, watched: true},
+			],
 			sassPreprocessor: {options},
 		}
 	);
@@ -332,7 +335,10 @@ test('Do not remove dependency from watcher when unreferenced, if another file s
 		{},
 		{
 			autoWatch: true,
-			files: [{pattern: fixture, watched: true}, {pattern: otherFixture, watched: true}],
+			files: [
+				{pattern: fixture, watched: true},
+				{pattern: otherFixture, watched: true},
+			],
 			sassPreprocessor: {options},
 		}
 	);
@@ -373,7 +379,10 @@ test('Do not remove dependency from watcher when different files have differents
 		{},
 		{
 			autoWatch: true,
-			files: [{pattern: fixture, watched: true}, {pattern: otherFixture, watched: true}],
+			files: [
+				{pattern: fixture, watched: true},
+				{pattern: otherFixture, watched: true},
+			],
 			sassPreprocessor: {options},
 		}
 	);
