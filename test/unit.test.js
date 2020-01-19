@@ -1,10 +1,10 @@
-import path from 'path';
-import {readFile, copy, outputFile, remove} from 'fs-extra';
-import test from 'ava';
-import {spy, match} from 'sinon';
-import tempy from 'tempy';
-import {waitFor, compile} from './helpers/utils';
-import {mockPreprocessor} from './helpers/mock';
+const path = require('path');
+const {readFile, copy, outputFile, remove} = require('fs-extra');
+const test = require('ava');
+const {spy, match} = require('sinon');
+const tempy = require('tempy');
+const {waitFor, compile} = require('./helpers/utils');
+const {mockPreprocessor} = require('./helpers/mock');
 
 test('Compile scss file', async t => {
 	const fixture = 'test/fixtures/basic.scss';
@@ -156,7 +156,7 @@ test('Log error on invalid scss file', async t => {
 	const fixture = 'test/fixtures/error.scss';
 	const {preprocessor, debug, error} = await mockPreprocessor();
 	const file = {originalPath: fixture};
-	const err = await t.throwsAsync(preprocessor(await readFile(fixture), file), Error);
+	const err = await t.throwsAsync(preprocessor(await readFile(fixture), file), {instanceOf: Error});
 
 	t.true(debug.firstCall.calledWith(match('Processing'), fixture));
 	t.true(err.message.includes('no mixin named text-red'));
@@ -467,7 +467,7 @@ test('Call refreshFiles when dependency is deleted and added', async t => {
 	t.true(refreshFiles.calledOnce);
 	info.resetHistory();
 	refreshFiles.resetHistory();
-	await t.throwsAsync(preprocessor(await readFile(fixture), file), Error);
+	await t.throwsAsync(preprocessor(await readFile(fixture), file), {instanceOf: Error});
 	const cpy = waitFor(watcher, 'add');
 
 	await copy('test/fixtures/partials/_partial.scss', partial);

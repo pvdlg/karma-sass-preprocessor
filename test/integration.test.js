@@ -1,9 +1,9 @@
-import path from 'path';
-import {copy} from 'fs-extra';
-import test from 'ava';
-import {stub} from 'sinon';
-import tempy from 'tempy';
-import {run, watch, waitForRunComplete} from './helpers/karma';
+const path = require('path');
+const {copy} = require('fs-extra');
+const test = require('ava');
+const {stub} = require('sinon');
+const tempy = require('tempy');
+const {run, watch, waitForRunComplete} = require('./helpers/karma');
 
 let stubWrite;
 

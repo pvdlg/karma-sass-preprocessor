@@ -1,6 +1,6 @@
-import pify from 'pify';
-import pEvent from 'p-event';
-import {render} from 'node-sass';
+const pify = require('pify');
+const pEvent = require('p-event');
+const {render} = require('node-sass');
 
 /**
  * Return a Promise that resolve when an event is emitted and reject after a timeout expire if the event is not emitted.
@@ -11,7 +11,7 @@ import {render} from 'node-sass';
  * @param {Number} [timeout=30000] maximum time to wait for the event to be emitted.
  * @return {Promise} Promise tht resolve when the event is emitted.
  */
-export function waitFor(emitter, event, timeout = 30000) {
+function waitFor(emitter, event, timeout = 30000) {
 	return pEvent(emitter, event, {timeout});
 }
 
@@ -29,7 +29,7 @@ export function waitFor(emitter, event, timeout = 30000) {
  * @param {Object} [options={}] node-sass options.
  * @return {Compiled} compiled code and source map.
  */
-export async function compile(file, options = {}) {
+async function compile(file, options = {}) {
 	if (options.sourceMap || options.map) {
 		options.sourceMap = true;
 		options.sourceMapEmbed = true;
@@ -41,3 +41,5 @@ export async function compile(file, options = {}) {
 
 	return {css: css.toString(), map: map ? JSON.parse(map) : undefined};
 }
+
+module.exports = {waitFor, compile};
