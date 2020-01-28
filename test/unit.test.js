@@ -6,6 +6,8 @@ const tempy = require('tempy');
 const {waitFor, compile} = require('./helpers/utils');
 const {mockPreprocessor} = require('./helpers/mock');
 
+/* eslint prefer-named-capture-group: "off" */
+
 test('Compile scss file', async t => {
 	const fixture = 'test/fixtures/basic.scss';
 	const {preprocessor, debug} = await mockPreprocessor();
